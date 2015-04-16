@@ -21,31 +21,61 @@
 #ifndef EDGEWHEEL_HEADER
 #define EDGEWHEEL_HEADER
 
-#include <KIcon>
-// We need the Plasma Applet headers
 #include <Plasma/Applet>
 #include <Plasma/Svg>
+#include <QList>
+#include <QVector>
+#include "animengine.h"
+#include "configurationinterfacewidget.h"
 
-class QSizeF;
-
-// Define our plasma Applet
 class EdgeWheel : public Plasma::Applet
 {
     Q_OBJECT
-    public:
-        // Basic Create/Destroy
-        EdgeWheel(QObject *parent, const QVariantList &args);
-        ~EdgeWheel();
+public:
+	EdgeWheel(QObject *parent, const QVariantList &args);
+    ~EdgeWheel();
+	
+	void paintInterface(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRect& contentsRect);
+	void createConfigurationInterface(KConfigDialog *parent);
 
-        // The paintInterface procedure paints the applet to the desktop
-        void paintInterface(QPainter *painter,
-                const QStyleOptionGraphicsItem *option,
-                const QRect& contentsRect);
-        void init();
+private slots:
+	void animUpdate();
+    void onHoverMouseTimer();
+	void saveItems();
+	void loadItems();
+	
+protected:
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
+	
+private:
+	bool createIconRing(QVector< LaunchIcon* > & ring, int nr, double r, int w, int icon_count, double density);
+	LaunchIcon* checkContains(QVector< LaunchIcon* >& ring, QPoint& e_pos);
+	
+    QPainterPath path;
+	QVector<LaunchIcon*> ring1;
+	QVector<LaunchIcon*> ring2;
+	QVector<LaunchIcon*> ring3;
+	QVector<LaunchIcon*> ring4;
+	QVector<LaunchIcon*> ring5;
+	QVector<LaunchIcon*> ring6;
+	QPixmap in;
+	QPixmap in_ring;
+	QPixmap out_ring;
+    QPixmap gate;
 
-    private:
-        Plasma::Svg m_svg;
-        KIcon m_icon;
+	double rotor_angle;
+    double gate_angle;
+    QPointF* gate_top_left;
+
+	QString file_path;
+	AnimEngine* anim_engine;
+    QTimer* mouse_hover_timer;
+	long long int mouse_hover_timer_cycle_counter;
+	int animation_type;
+	
+	ConfigurationInterfaceWidget *interface_widget;
 };
  
 // This is the command that links your applet to the .desktop file

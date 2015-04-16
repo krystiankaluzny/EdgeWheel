@@ -11,14 +11,16 @@ include_directories(
    ${CMAKE_BINARY_DIR}
    ${KDE4_INCLUDES}
    )
- 
+
+SET(CMAKE_CXX_FLAGS "-std=c++0x")
+
 # We add our source code here
-set(edgewheel_SRCS edgewheel.cpp)
+set(edgewheel_SRCS configurationinterfacewidget.cpp animengine.cpp edgewheel.cpp)
  
 # Now make sure all files get to the right place
 kde4_add_plugin(plasma_applet_edgewheel ${edgewheel_SRCS})
 target_link_libraries(plasma_applet_edgewheel 
-                      ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS})
+                      ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY})
  
 install(TARGETS plasma_applet_edgewheel
         DESTINATION ${PLUGIN_INSTALL_DIR})
