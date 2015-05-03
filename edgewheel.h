@@ -27,7 +27,13 @@
 #include <QVector>
 #include "animengine.h"
 #include "configurationinterfacewidget.h"
-
+/*
+ * TODO
+ * jeżeli aktywator nie był zypełnie pusty to zapytać w oknie dialogowym czy napewno zapisać zmieniany
+ * poszeżyć rozmiar appletu, żeby napisy się mieściły
+ * otwierać edycje tego aktywatora, na który się klikneło
+ * dodać ikonkę do edycji aktywatora
+ */
 class EdgeWheel : public Plasma::Applet
 {
     Q_OBJECT
